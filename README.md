@@ -41,8 +41,22 @@ Ensures the home exists, sets ownership to username:username, and permissions 70
 + Set password
 Uses chpasswd to set the generated password.
 
-Save credentials
++ Save credentials
 Appends username:password to /var/secure/user_passwords.txt. The script uses flock when available to avoid concurrent write races.
 
-Logging
++ Logging
 All important steps (success/failure/warnings) are appended to /var/log/user_management.log with timestamps.
+
+### Example
+
+Given `users_list.txt`:
+
+#### new hires
+light; sudo,dev,www-data
+siyoni; sudo
+manoj; dev,www-data
+
+#### To run the script:
+
+`sudo ./create_users.sh users_list.txt`
+
