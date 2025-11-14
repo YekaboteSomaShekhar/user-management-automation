@@ -52,11 +52,16 @@ All important steps (success/failure/warnings) are appended to /var/log/user_man
 Given `users_list.txt`:
 
 #### new hires
-light; sudo,dev,www-data
-siyoni; sudo
-manoj; dev,www-data
++ light; sudo,dev,www-data
++ siyoni; sudo
++ manoj; dev,www-data
 
 #### To run the script:
 
 `sudo ./create_users.sh users_list.txt`
 
+#### Expected output:
+
++ User 'light' processed. Credentials stored in /var/secure/user_passwords.txt (root-only).
++ User 'siyoni' processed. Credentials stored in /var/secure/user_passwords.txt (root-only).
++ User 'manoj' processed. Credentials stored in /var/secure/user_passwords.txt (root-only).
