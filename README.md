@@ -1,6 +1,6 @@
 ### User Management Automation Task
 
-## Purpose & design
+## Purpose & design:
 
 create_users.sh automates onboarding of Linux user accounts from a simple text file. Each input line has the format:
 
@@ -47,7 +47,7 @@ Appends username:password to /var/secure/user_passwords.txt. The script uses flo
 + Logging
 All important steps (success/failure/warnings) are appended to /var/log/user_management.log with timestamps.
 
-### Example
+### Example:
 
 Given `users_list.txt`:
 
@@ -65,3 +65,15 @@ Given `users_list.txt`:
 + User 'light' processed. Credentials stored in /var/secure/user_passwords.txt (root-only).
 + User 'siyoni' processed. Credentials stored in /var/secure/user_passwords.txt (root-only).
 + User 'manoj' processed. Credentials stored in /var/secure/user_passwords.txt (root-only).
+
+### Security considerations & recommendations:
+
++ **Protect credentials file**: /var/secure/user_passwords.txt is created with permissions 600 and owned by root. Only admins (root) should be able to read it. Consider encrypting this file at rest (e.g., using GPG) if long-term storage is required.
+
++ **Avoid printing passwords to STDOUT** in production. The script prints only a notice — it does not print passwords to the terminal. Credentials are written to the restricted file.
+
++ **Audit & rotation**: Keep logs and rotate /var/log/user_management.log with your normal logrotation policy. Rotate and securely remove old /var/secure credential files. Avoid keeping plaintext credentials longer than needed.
+
++ **Harden password generation**: The script uses a fairly strong random generator. You can increase length/complexity per policy.
+
++ **Idempotency & safety**: The script attempts to handle existing users gracefully. Still test in a staging environment before running across many production systems.
